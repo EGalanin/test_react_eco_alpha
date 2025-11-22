@@ -27,21 +27,10 @@ export default function Home() {
         setProducts(products.filter((product) => product.id !== id));
     };
 
-    if (loading) {
-        return <div className='text-center py-8'>Загрузка...</div>;
-    }
-
-    if (error) {
-        return <div className='text-red-500 text-center py-8'>{error}</div>;
-    }
-
     useEffect(() => {
         const loadProducts = async () => {
             try {
                 const data = await fetchProducts();
-                if (data instanceof Error) {
-                    throw data;
-                }
 
                 const likedProducts = JSON.parse(localStorage.getItem('likedProducts') || '[]');
                 const productsWithLike = data.map((product: Product) => ({
@@ -59,6 +48,14 @@ export default function Home() {
         };
         loadProducts();
     }, []);
+
+    if (loading) {
+        return <div className='text-center py-8'>Загрузка...</div>;
+    }
+
+    if (error) {
+        return <div className='text-red-500 text-center py-8'>{error}</div>;
+    }
 
     return (
         <div className='flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black'>

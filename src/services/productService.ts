@@ -2,8 +2,8 @@ import { Product } from '@/types/products';
 
 const API_URL = 'https://jsonplaceholder.typicode.com/posts';
 
-export const fetchProducts = async (): Promise<Product[]> => {
-    const response = await fetch(API_URL);
+export const fetchProducts = async (start: number, limit: number): Promise<Product[]> => {
+    const response = await fetch(`${API_URL}?_start=${start}&_limit=${limit}`);
     if (!response.ok) {
         throw new Error('Не удалось загрузить продукты');
     }
@@ -30,4 +30,10 @@ export const getProductById = async (id: number): Promise<Product> => {
         userId: data.userId,
         isLiked: false,
     };
+};
+
+export const getTotalProductsCount = async (): Promise<number> => {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const data = await response.json();
+    return data.length;
 };

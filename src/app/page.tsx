@@ -3,12 +3,25 @@
 import { ProductCard } from '@/components/ProductCard';
 import { useEffect, useState } from 'react';
 import { Product } from '@/types/products';
-import { fetchProducts } from '@/services/productService';
+import { fetchProducts, getTotalProductsCount } from '@/services/productService';
+import ReactPaginate from 'react-paginate';
+import '../styles/pagination.css';
+
+const ITEMS_PER_PAGE = 8;
 
 export default function Home() {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [pageCount, setPageCount] = useState(0);
+    const [itemOffset, setItemOffset] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
+
+    const handlePageClick = (event: { selected: number }) => {
+        const newOffset = (event.selected * ITEMS_PER_PAGE) % 100; // 100 - общее кол-во товаров
+        setItemOffset(newOffset);
+        setCurrentPage(event.selected + 1);
+    };
 
     const handleToggleLike = (id: number) => {
         setProducts((prevProducts) => {
@@ -30,7 +43,9 @@ export default function Home() {
     useEffect(() => {
         const loadProducts = async () => {
             try {
-                const data = await fetchProducts();
+                const data = await fetchProducts(currentPage * ITEMS_PER_PAGE, ITEMS_PER_PAGE);
+                const total = await getTotalProductsCount();
+                setPageCount(Math.ceil(total / ITEMS_PER_PAGE));
 
                 const likedProducts = JSON.parse(localStorage.getItem('likedProducts') || '[]');
                 const productsWithLike = data.map((product: Product) => ({
@@ -46,8 +61,9 @@ export default function Home() {
                 setLoading(false);
             }
         };
+
         loadProducts();
-    }, []);
+    }, [currentPage]);
 
     if (loading) {
         return <div className='text-center py-8'>Загрузка...</div>;
@@ -60,7 +76,7 @@ export default function Home() {
     return (
         <div className='flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black'>
             <main className='flex min-h-screen w-full flex-col items-center justify-center py-32 px-16 bg-white dark:bg-black sm:items-start'>
-                <h1 className='text-2xl font-bold mb-4 text-center w-full'>Home</h1>
+                <h1 className='text-2xl font-bold mb-4 text-center w-full'>Список продуктов</h1>
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full'>
                     {products.map((product) => (
                         <ProductCard
@@ -71,6 +87,20 @@ export default function Home() {
                         />
                     ))}
                 </div>
+                <ReactPaginate
+                    breakLabel='...'
+                    nextLabel='Вперед >'
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={5}
+                    pageCount={pageCount}
+                    previousLabel='< Назад'
+                    renderOnZeroPageCount={null}
+                    containerClassName='pagination'
+                    pageLinkClassName='page-num'
+                    previousLinkClassName='page-num'
+                    nextLinkClassName='page-num'
+                    activeLinkClassName='active'
+                />
             </main>
         </div>
     );

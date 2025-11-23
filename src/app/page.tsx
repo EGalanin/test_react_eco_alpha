@@ -76,7 +76,7 @@ export default function Home() {
     return (
         <div className='flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black'>
             <main className='flex min-h-screen w-full flex-col items-center justify-center py-32 px-16 bg-white dark:bg-black sm:items-start'>
-                <h1 className='text-2xl font-bold mb-4 text-center w-full'>Список продуктов</h1>
+                <h1 className='text-2xl font-bold mb-10 text-center w-full'>Список продуктов</h1>
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full'>
                     {products.map((product) => (
                         <ProductCard
@@ -87,20 +87,23 @@ export default function Home() {
                         />
                     ))}
                 </div>
-                <ReactPaginate
-                    breakLabel='...'
-                    nextLabel='Вперед >'
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={5}
-                    pageCount={pageCount}
-                    previousLabel='< Назад'
-                    renderOnZeroPageCount={null}
-                    containerClassName='pagination'
-                    pageLinkClassName='page-num'
-                    previousLinkClassName='page-num'
-                    nextLinkClassName='page-num'
-                    activeLinkClassName='active'
-                />
+                <div className='w-full flex justify-center'>
+                    <ReactPaginate
+                        breakLabel='...'
+                        nextLabel='Вперед'
+                        previousLabel='Назад'
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={3}
+                        marginPagesDisplayed={1}
+                        pageCount={pageCount}
+                        containerClassName='pagination'
+                        pageLinkClassName='page-link'
+                        previousLinkClassName='page-link'
+                        nextLinkClassName='page-link'
+                        activeClassName='active'
+                        disabledClassName='disabled'
+                    />
+                </div>
             </main>
         </div>
     );

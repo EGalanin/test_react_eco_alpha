@@ -33,7 +33,27 @@ export const getProductById = async (id: number): Promise<Product> => {
 };
 
 export const getTotalProductsCount = async (): Promise<number> => {
-    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const response = await fetch(API_URL);
     const data = await response.json();
     return data.length;
+};
+
+export const createProduct = async (productData: {
+    title: string;
+    body: string;
+    userId: number;
+}) => {
+    const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(productData),
+    });
+
+    if (!response.ok) {
+        throw new Error('Не удалось создать продукт');
+    }
+
+    return response.json();
 };

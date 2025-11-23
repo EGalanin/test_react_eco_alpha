@@ -7,6 +7,7 @@ import { fetchProducts, getTotalProductsCount } from '@/services/productService'
 import ReactPaginate from 'react-paginate';
 import '../../styles/pagination.css';
 import { Loader } from '@/components/Loader';
+import Link from 'next/link';
 
 const ITEMS_PER_PAGE = 8;
 
@@ -80,8 +81,14 @@ export default function ProductsList() {
 
     return (
         <div className='flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black'>
-            <main className='flex min-h-screen w-full flex-col items-center justify-center py-32 px-16 bg-white dark:bg-black sm:items-start'>
-                <h1 className='text-2xl font-bold mb-10 text-center w-full'>Список продуктов</h1>
+            <main className='flex min-h-screen w-full flex-col  gap-10 items-center justify-center py-32 px-16 bg-white dark:bg-black sm:items-start'>
+                <h1 className='text-2xl font-bold text-center w-full'>Список продуктов</h1>
+                <Link
+                    href='/products/create-product'
+                    className='px-4 py-2 bg-gray-700 text-white hover:bg-gray-600 rounded transition-colors'
+                >
+                    Создать продукт
+                </Link>
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full'>
                     {products.map((product) => (
                         <ProductCard

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import '../../styles/pagination.css';
 import { Loader } from '@/components/Loader';
+import { ErrorHandler } from '@/components/shared/ErrorHandler';
 import Link from 'next/link';
 import {
     api,
@@ -117,15 +118,12 @@ export default function ProductsList() {
     }
 
     if (error) {
-        const errorMessage =
-            'status' in error
-                ? `Ошибка ${error.status}: ${JSON.stringify(error.data)}`
-                : 'Произошла неизвестная ошибка';
-
         return (
-            <div className='text-red-500 text-center py-8'>
-                Ошибка загрузки продуктов: {errorMessage}
-            </div>
+            <ErrorHandler
+                error={error}
+                defaultMessage="Не удалось загрузить список продуктов"
+                className="text-red-500 text-center py-8"
+            />
         );
     }
 

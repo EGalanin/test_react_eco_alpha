@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Product } from '@/types/products';
+import { ProductFormData } from '@/app/products/create-product/page';
 
 const API_URL = 'https://jsonplaceholder.typicode.com';
 
@@ -31,7 +32,7 @@ export const api = createApi({
                 };
             },
         }),
-        createProduct: builder.mutation({
+        createProduct: builder.mutation<Product, ProductFormData>({
             query: (productData) => ({
                 url: '/posts',
                 method: 'POST',

@@ -13,8 +13,7 @@ import {
     useGetTotalProductsCountQuery,
 } from '@/services/api';
 import { useAppDispatch } from '@/store/hooks';
-
-const ITEMS_PER_PAGE = 8;
+import { ITEMS_PER_PAGE } from '@/constants/pagination';
 
 export default function ProductsList() {
     const [currentPage, setCurrentPage] = useState(0);
@@ -128,24 +127,25 @@ export default function ProductsList() {
                         />
                     ))}
             </div>
-            <div className='w-full flex justify-center mb-6'>
-                <ReactPaginate
-                    breakLabel='...'
-                    nextLabel='Вперед'
-                    previousLabel='Назад'
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={3}
-                    marginPagesDisplayed={1}
-                    pageCount={pageCount}
-                    containerClassName='pagination'
-                    pageLinkClassName='page-link'
-                    previousLinkClassName='page-link'
-                    nextLinkClassName='page-link'
-                    activeClassName='active'
-                    disabledClassName='disabled'
-                    forcePage={currentPage}
-                />
-            </div>
+            {pageCount > 1 && (
+                <div className='w-full flex justify-center mb-6'>
+                    <ReactPaginate
+                        breakLabel='...'
+                        nextLabel='Вперед'
+                        previousLabel='Назад'
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={3}
+                        marginPagesDisplayed={1}
+                        pageCount={pageCount}
+                        containerClassName='pagination'
+                        pageLinkClassName='page-link'
+                        previousLinkClassName='page-link'
+                        nextLinkClassName='page-link'
+                        activeClassName='active'
+                        forcePage={currentPage}
+                    />
+                </div>
+            )}
         </div>
     );
 }

@@ -1,63 +1,51 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { Product } from '@/types/products';
-import { getProductById } from '@/services/productService';
 import Link from 'next/link';
 import { Loader } from '@/components/Loader';
+import { useGetProductByIdQuery } from '@/services/api';
 
 export default function ProductPage() {
-    const [product, setProduct] = useState<Product | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
     const params = useParams();
     const productId = Number(params.id);
+    const { data: product, isLoading, error } = useGetProductByIdQuery(productId);
 
-    useEffect(() => {
-        const loadProduct = async () => {
-            try {
-                const data = await getProductById(productId);
-                const likedProducts = JSON.parse(localStorage.getItem('likedProducts') || '[]');
-                const productWithLike = {
-                    ...data,
-                    isLiked: likedProducts.includes(data.id),
-                };
-
-                setProduct(productWithLike);
-            } catch (error) {
-                setError('Не удалось загрузить продукт');
-                console.error('Ошибка загрузки продукта:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (productId) {
-            loadProduct();
-        }
-    }, [productId]);
-
-    if (loading) {
+    if (isLoading) {
         return (
             <div className='flex items-center justify-center min-h-screen'>
                 <Loader />
             </div>
         );
     }
-    if (error) return <div className='text-red-500 text-center py-8'>{error}</div>;
+
+    if (error) {
+        const errorMessage =
+            'status' in error
+                ? `Ошибка ${error.status}: ${JSON.stringify(error.data)}`
+                : 'Произошла неизвестная ошибка';
+
+        return (
+            <div className='text-red-500 text-center py-8'>
+                Ошибка загрузки продуктов: {errorMessage}
+            </div>
+        );
+    }
+
     if (!product) return <div className='text-center py-8'>Продукт не найден</div>;
 
     return (
         <div className='container mx-auto px-4 py-8 max-w-4xl'>
             <div className='bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden'>
                 <div className='p-6'>
-                    <div className='flex justify-between items-start'>
-                        <h1 className='text-2xl font-bold mb-4'>{product.title}</h1>
+                    <div className='flex justify-between items-center gap-4 mb-4'>
+                        <div className='flex-1 min-w-0'>
+                            <h1 className='text-2xl font-bold truncate' title={product.title}>
+                                {product.title}
+                            </h1>
+                        </div>
                         <Link
                             href='/'
-                            className='px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors'
+                            className='flex-shrink-0 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors whitespace-nowrap'
                         >
                             Назад к списку
                         </Link>

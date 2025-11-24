@@ -5,7 +5,10 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { createProduct } from '@/services/productService';
+import { api, useCreateProductMutation } from '@/services/api';
+import { useAppDispatch } from '@/store/hooks';
+import { ITEMS_PER_PAGE } from '@/constants/pagination';
+import toast from 'react-hot-toast';
 
 const productSchema = z.object({
     title: z.string().min(3, 'Минимум 3 символа').max(100, 'Максимум 100 символов'),
@@ -13,10 +16,11 @@ const productSchema = z.object({
     userId: z.number().min(1, 'Обязательное поле'),
 });
 
-type ProductFormData = z.infer<typeof productSchema>;
+export type ProductFormData = z.infer<typeof productSchema>;
 
 export default function CreateProductPage() {
     const router = useRouter();
+    const dispatch = useAppDispatch();
     const {
         register,
         handleSubmit,
@@ -24,15 +28,42 @@ export default function CreateProductPage() {
     } = useForm<ProductFormData>({
         resolver: zodResolver(productSchema),
     });
+    const [createProduct] = useCreateProductMutation();
 
     const onSubmit = async (data: ProductFormData) => {
-        // try {
-        //     await createProduct(data);
-        //     router.push('/products');
-        // } catch (error) {
-        //     console.error('Error creating product:', error);
-        // }
-        console.log(data);
+        const loadingToast = toast.loading('Создание продукта...');
+
+        try {
+            // апи работает но не сохраняет изменения
+            // const newProduct = await createProduct(data).unwrap();
+            // console.log(newProduct);
+
+            // демонстрация дообавления продукта
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            const mockProduct = {
+                ...data,
+                id: Date.now(),
+                isLiked: false,
+            };
+
+            dispatch(
+                api.util.updateQueryData(
+                    'getProducts',
+                    { page: 1, limit: ITEMS_PER_PAGE },
+                    (draft) => {
+                        draft.unshift(mockProduct);
+                        if (draft.length > ITEMS_PER_PAGE) {
+                            draft.pop();
+                        }
+                    }
+                )
+            );
+            toast.success('Продукт успешно создан!', { id: loadingToast });
+            router.push('/products?page=1');
+        } catch (error) {
+            console.error('Не удалось создать новый продукт:', error);
+            toast.error('Произошла ошибка при создании продукта', { id: loadingToast });
+        }
     };
 
     return (

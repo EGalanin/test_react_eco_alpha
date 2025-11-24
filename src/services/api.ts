@@ -9,14 +9,20 @@ export const api = createApi({
     reducerPath: 'api',
     tagTypes: ['Products'],
     endpoints: (builder) => ({
-        getProducts: builder.query<Product[], { page: number; limit: number }>({
+        getProducts: builder.query<Product[], { page: number; limit: number; favoritesOnly?: boolean }>({
             query: ({ page, limit }) => `/posts?_page=${page}&_limit=${limit}`,
-            transformResponse: (response: Omit<Product, 'isLiked'>[]) => {
+            transformResponse: (response: Omit<Product, 'isLiked'>[], meta, { favoritesOnly }) => {
                 const likedProducts = JSON.parse(localStorage.getItem('likedProducts') || '[]');
-                return response.map((product) => ({
+                const products = response.map((product) => ({
                     ...product,
                     isLiked: likedProducts.includes(product.id),
                 }));
+
+                if (favoritesOnly) {
+                    return products.filter(product => likedProducts.includes(product.id));
+                }
+                
+                return products;
             },
             providesTags: ['Products'],
         }),

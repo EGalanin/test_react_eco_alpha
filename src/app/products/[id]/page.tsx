@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Loader } from '@/components/Loader';
 import { useGetProductByIdQuery } from '@/services/api';
+import toast from 'react-hot-toast';
 
 export default function ProductPage() {
     const params = useParams();
@@ -23,6 +24,7 @@ export default function ProductPage() {
             'status' in error
                 ? `Ошибка ${error.status}: ${JSON.stringify(error.data)}`
                 : 'Произошла неизвестная ошибка';
+        toast.error(`Ошибка загрузки: ${errorMessage}`);
 
         return (
             <div className='text-red-500 text-center py-8'>

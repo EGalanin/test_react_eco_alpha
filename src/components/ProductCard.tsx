@@ -3,6 +3,9 @@
 import { Product } from '@/types/products';
 import { Heart, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { MAX_DESCRIPTION_LENGTH } from '@/constants/products';
+import { memo, useCallback } from 'react';
+import { useTruncateText } from '@/hooks/useTruncateText';
 
 interface ProductCardProps {
     product: Product;
@@ -10,28 +13,29 @@ interface ProductCardProps {
     onDelete: (id: number) => void;
 }
 
-export const ProductCard = ({ product, onToggleLike, onDelete }: ProductCardProps) => {
+export const ProductCard = memo(({ product, onToggleLike, onDelete }: ProductCardProps) => {
     const router = useRouter();
-    const MAX_DESCRIPTION_LENGTH = 100;
+    const truncatedBody = useTruncateText(product.body, MAX_DESCRIPTION_LENGTH);
 
-    const handleCardClick = () => {
+    const handleCardClick = useCallback(() => {
         router.push(`/products/${product.id}`);
-    };
+    }, [product.id, router]);
 
-    const handleLikeClick = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        onToggleLike(product.id);
-    };
+    const handleLikeClick = useCallback(
+        (e: React.MouseEvent) => {
+            e.stopPropagation();
+            onToggleLike(product.id);
+        },
+        [onToggleLike, product.id]
+    );
 
-    const handleDeleteClick = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        onDelete(product.id);
-    };
-
-    const truncatedBody =
-        product.body.length > MAX_DESCRIPTION_LENGTH
-            ? `${product.body.substring(0, MAX_DESCRIPTION_LENGTH)}...`
-            : product.body;
+    const handleDeleteClick = useCallback(
+        (e: React.MouseEvent) => {
+            e.stopPropagation();
+            onDelete(product.id);
+        },
+        [onDelete, product.id]
+    );
 
     return (
         <div
@@ -64,4 +68,4 @@ export const ProductCard = ({ product, onToggleLike, onDelete }: ProductCardProp
             <p className='text-gray-400 flex-grow overflow-hidden'>{truncatedBody}</p>
         </div>
     );
-};
+});

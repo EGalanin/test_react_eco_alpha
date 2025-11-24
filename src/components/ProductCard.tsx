@@ -1,6 +1,6 @@
 'use client';
 
-import { Product } from '@/types/products';
+import { Product } from "@/types/product";
 import { Heart, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { MAX_DESCRIPTION_LENGTH } from '@/constants/products';

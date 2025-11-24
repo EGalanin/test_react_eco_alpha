@@ -1,4 +1,4 @@
-import { Product } from '@/types/products';
+import { Product } from '@/types/product';
 import { ProductFormData } from '@/app/products/create-product/page';
 import { baseApi } from '@/services/api/base-api';
 

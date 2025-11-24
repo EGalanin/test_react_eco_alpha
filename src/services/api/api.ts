@@ -1,15 +1,13 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Product } from '@/types/products';
 import { ProductFormData } from '@/app/products/create-product/page';
+import { baseApi } from '@/services/api/base-api';
 
-const API_URL = 'https://jsonplaceholder.typicode.com';
-
-export const api = createApi({
-    baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
-    reducerPath: 'api',
-    tagTypes: ['Products'],
+export const api = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getProducts: builder.query<Product[], { page: number; limit: number; favoritesOnly?: boolean }>({
+        getProducts: builder.query<
+            Product[],
+            { page: number; limit: number; favoritesOnly?: boolean }
+        >({
             query: ({ page, limit }) => `/posts?_page=${page}&_limit=${limit}`,
             transformResponse: (response: Omit<Product, 'isLiked'>[], meta, { favoritesOnly }) => {
                 const likedProducts = JSON.parse(localStorage.getItem('likedProducts') || '[]');
@@ -19,9 +17,9 @@ export const api = createApi({
                 }));
 
                 if (favoritesOnly) {
-                    return products.filter(product => likedProducts.includes(product.id));
+                    return products.filter((product) => likedProducts.includes(product.id));
                 }
-                
+
                 return products;
             },
             providesTags: ['Products'],

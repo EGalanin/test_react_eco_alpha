@@ -8,10 +8,12 @@ import { ProductInfo } from '@/components/product/ProductInfo';
 import { ProductMetadata } from '@/components/product/ProductMetadata';
 import { ErrorHandler } from '@/components/shared/ErrorHandler';
 
-export default function ProductById() {
-    const params = useParams();
-    const productId = Number(params.id);
-    const { data: product, isLoading, error } = useGetProductByIdQuery(productId);
+interface ProductByIdProps {
+    id: string;
+}
+
+export default function ProductById({ id }: ProductByIdProps) {
+    const { data: product, isLoading, error } = useGetProductByIdQuery(id);
 
     if (isLoading) {
         return (

@@ -24,7 +24,7 @@ export const api = baseApi.injectEndpoints({
             },
             providesTags: ['Products'],
         }),
-        getProductById: builder.query<Product, number>({
+        getProductById: builder.query<Product, string>({
             query: (id) => `/posts/${id}`,
             providesTags: ['Products'],
         }),

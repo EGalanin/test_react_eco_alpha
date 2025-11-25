@@ -23,26 +23,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Установка Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
 
-      - name: Install dependencies
+      - name: Установка pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Установка зависимостей
         run: pnpm install --frozen-lockfile
 
-      - name: Build
+      - name: Сборка
         run: pnpm run build
 
-      - name: Setup Pages
+      - name: Настройка GitHub Pages
         uses: actions/configure-pages@v4
 
-      - name: Upload artifact
+      - name: Загрузка артефакта
         uses: actions/upload-pages-artifact@v3
         with:
           path: './out'
 
-      - name: Deploy to GitHub Pages
+      - name: Деплой на GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

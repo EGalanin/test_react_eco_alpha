@@ -2,36 +2,47 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]  # Активируется при пуше в ветку main
+    branches: [ "main" ]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
-        
-      - name: Setup Node.js
+
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
-          
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 8
-          
+          node-version: '20'
+          cache: 'pnpm'
+
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
-        
-      - name: Build project
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
         run: pnpm run build
-        
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          folder: out  # Папка с собранным приложением
-          branch: gh-pages  # Ветка, куда будет выкладываться приложение
-          token: ${{ secrets.GITHUB_TOKEN }}  # Токен доступа (создается автоматически)
-          clean: true  # Очищать предыдущие файлы
+          path: './out'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

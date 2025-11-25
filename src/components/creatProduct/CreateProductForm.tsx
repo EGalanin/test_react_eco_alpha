@@ -16,7 +16,7 @@ const productSchema = z.object({
     userId: z.number().min(1, 'Обязательное поле'),
 });
 
-type ProductFormData = z.infer<typeof productSchema>;
+export type ProductFormData = z.infer<typeof productSchema>;
 
 export const CreateProductForm = () => {
     const router = useRouter();

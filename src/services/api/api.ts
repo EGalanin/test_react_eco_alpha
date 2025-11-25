@@ -1,6 +1,6 @@
 import { Product } from '@/types/product';
-import { ProductFormData } from '@/app/products/create-product/page';
 import { baseApi } from '@/services/api/base-api';
+import { ProductFormData } from '@/components/creatProduct/CreateProductForm';
 
 export const api = baseApi.injectEndpoints({
     endpoints: (builder) => ({

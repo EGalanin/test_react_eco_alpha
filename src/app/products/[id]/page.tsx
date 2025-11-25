@@ -1,7 +1,5 @@
 import { Metadata } from 'next';
-import { api } from '@/services/api';
-import ProductById from '@/app/products/[id]/ProductById';
-import { Product } from '@/types/product';
+import ProductById from './ProductById';
 
 export const metadata: Metadata = {
     title: 'Продукт',
@@ -9,16 +7,10 @@ export const metadata: Metadata = {
 };
 
 export async function generateStaticParams() {
-    const result = api.endpoints.getProducts.initiate({ page: 1, limit: 100 });
-    const response = await result;
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const products = await response.json();
 
-    const products = (response as { data?: Product[] })?.data || [];
-
-    if ('unsubscribe' in result) {
-        (result as { unsubscribe: () => void }).unsubscribe();
-    }
-
-    return products.map((product) => ({
+    return products.map((product: { id: number }) => ({
         id: product.id.toString(),
     }));
 }

@@ -9,13 +9,13 @@ export function Header() {
                 </Link>
                 <nav className='space-x-4'>
                     <Link href='/products' className='hover:text-gray-300 transition-colors'>
-                        Products
+                        Продукты
                     </Link>
                     <Link
                         href='/products/create-product'
                         className='hover:text-gray-300 transition-colors'
                     >
-                        Create Product
+                        Создать продукт
                     </Link>
                 </nav>
             </div>

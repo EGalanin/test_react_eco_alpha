@@ -9,8 +9,8 @@ import { Toaster } from 'react-hot-toast';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-    title: 'Test App',
-    description: 'My test Next.js app',
+    title: 'Главная страница',
+    description: 'Тестовое приложение',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

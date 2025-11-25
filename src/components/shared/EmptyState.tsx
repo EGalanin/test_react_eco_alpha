@@ -1,12 +1,12 @@
 interface EmptyStateProps {
-  message: string;
-  className?: string;
+    message: string;
+    className?: string;
 }
 
 export function EmptyState({ message, className = '' }: EmptyStateProps) {
-  return (
-    <div className={`text-center py-12 ${className}`}>
-      <p className='text-gray-500 text-lg'>{message}</p>
-    </div>
-  );
+    return (
+        <div className={`text-center py-12 ${className}`}>
+            <p className='text-gray-500 text-lg'>{message}</p>
+        </div>
+    );
 }

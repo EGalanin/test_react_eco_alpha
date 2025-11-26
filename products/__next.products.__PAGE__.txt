@@ -1,7 +1,7 @@
 1:"$Sreact.fragment"
-2:I[4796,["https://egalanin.github.io/test_react_eco_alpha/_next/static/chunks/0887403bd3a3e3b7.js","https://egalanin.github.io/test_react_eco_alpha/_next/static/chunks/b64dc0d605c1de02.js","https://egalanin.github.io/test_react_eco_alpha/_next/static/chunks/3803570d3e36a05b.js"],"default"]
-3:I[45297,["https://egalanin.github.io/test_react_eco_alpha/_next/static/chunks/7ceea1baff856d5d.js","https://egalanin.github.io/test_react_eco_alpha/_next/static/chunks/e1fc490196dff2be.js"],"OutletBoundary"]
+2:I[4796,["/test_react_eco_alpha/_next/static/chunks/0887403bd3a3e3b7.js","/test_react_eco_alpha/_next/static/chunks/b64dc0d605c1de02.js","/test_react_eco_alpha/_next/static/chunks/3803570d3e36a05b.js"],"default"]
+3:I[45297,["/test_react_eco_alpha/_next/static/chunks/7ceea1baff856d5d.js","/test_react_eco_alpha/_next/static/chunks/e1fc490196dff2be.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
-:HL["https://egalanin.github.io/test_react_eco_alpha/_next/static/chunks/b1b62251dae7f98e.css","style"]
-0:{"buildId":"uqOCccHnrferm3KNvM0ux","rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","link","0",{"rel":"stylesheet","href":"https://egalanin.github.io/test_react_eco_alpha/_next/static/chunks/b1b62251dae7f98e.css","precedence":"next"}],["$","script","script-0",{"src":"https://egalanin.github.io/test_react_eco_alpha/_next/static/chunks/3803570d3e36a05b.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+:HL["/test_react_eco_alpha/_next/static/chunks/b1b62251dae7f98e.css","style"]
+0:{"buildId":"7zuRai8k-0nC9hyOcYNcM","rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","link","0",{"rel":"stylesheet","href":"/test_react_eco_alpha/_next/static/chunks/b1b62251dae7f98e.css","precedence":"next"}],["$","script","script-0",{"src":"/test_react_eco_alpha/_next/static/chunks/3803570d3e36a05b.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
 5:null

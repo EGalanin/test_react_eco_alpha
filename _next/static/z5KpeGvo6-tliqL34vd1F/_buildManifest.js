@@ -1,11 +1,6 @@
 self.__BUILD_MANIFEST = {
   "__rewrites": {
-    "afterFiles": [
-      {
-        "source": "/test_react_eco_alpha/_next/static/:path*",
-        "destination": "/test_react_eco_alpha/_next/static/:path*"
-      }
-    ],
+    "afterFiles": [],
     "beforeFiles": [],
     "fallback": []
   },

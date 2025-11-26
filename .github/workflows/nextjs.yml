@@ -21,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Полная история репозитория
+          fetch-depth: 0
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -34,19 +34,17 @@ jobs:
           node-version: "20"
           cache: 'pnpm'
 
-      # Отладочный шаг
-      - name: Показать файлы
+      - name: Показать файлы (отладка)
         run: ls -la
 
       - name: Установка зависимостей
         run: |
-          if [ -f "pnpm-lock.yaml" ]; then
-            echo "Найден pnpm-lock.yaml, устанавливаю с --frozen-lockfile"
-            pnpm install --frozen-lockfile
-          else
-            echo "pnpm-lock.yaml не найден, устанавливаю без --frozen-lockfile"
-            pnpm install
-          fi
+          # Принудительно обновляем pnpm-lock.yaml
+          pnpm install --no-frozen-lockfile
+          # Проверяем, что файл создан
+          ls -la pnpm-lock.yaml || echo "WARNING: pnpm-lock.yaml не найден"
+          # Устанавливаем зависимости
+          pnpm install
 
       - name: Сборка Next.js
         run: |

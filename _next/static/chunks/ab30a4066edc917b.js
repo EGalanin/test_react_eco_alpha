@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,25885,(s,t,e)=>{t.exports=s.r(2365)},75786,s=>{"use strict";var t=s.i(83263);t.useSelector,s.s(["useAppDispatch",0,()=>(0,t.useDispatch)()])},93698,s=>{"use strict";s.s(["ITEMS_PER_PAGE",0,8])}]);

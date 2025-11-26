@@ -1,6 +1,6 @@
 1:"$Sreact.fragment"
-2:I[29019,["/test_react_eco_alpha/_next/static/chunks/0887403bd3a3e3b7.js","/test_react_eco_alpha/_next/static/chunks/b64dc0d605c1de02.js","/test_react_eco_alpha/_next/static/chunks/e0868777d10f41a2.js"],"default"]
-3:I[45297,["/test_react_eco_alpha/_next/static/chunks/7ceea1baff856d5d.js","/test_react_eco_alpha/_next/static/chunks/e1fc490196dff2be.js"],"OutletBoundary"]
+2:I[29019,["https://egalanin.github.io/test_react_eco_alpha/_next/static/chunks/0887403bd3a3e3b7.js","https://egalanin.github.io/test_react_eco_alpha/_next/static/chunks/b64dc0d605c1de02.js","https://egalanin.github.io/test_react_eco_alpha/_next/static/chunks/e0868777d10f41a2.js"],"default"]
+3:I[45297,["https://egalanin.github.io/test_react_eco_alpha/_next/static/chunks/7ceea1baff856d5d.js","https://egalanin.github.io/test_react_eco_alpha/_next/static/chunks/e1fc490196dff2be.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
-0:{"buildId":"dy8terKtmWTSQQrHSMa4U","rsc":["$","$1","c",{"children":[["$","$L2",null,{"id":"63"}],[["$","script","script-0",{"src":"/test_react_eco_alpha/_next/static/chunks/e0868777d10f41a2.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"uqOCccHnrferm3KNvM0ux","rsc":["$","$1","c",{"children":[["$","$L2",null,{"id":"63"}],[["$","script","script-0",{"src":"https://egalanin.github.io/test_react_eco_alpha/_next/static/chunks/e0868777d10f41a2.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
 5:null
